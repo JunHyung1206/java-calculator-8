@@ -1,5 +1,8 @@
 package calculator;
 
+import calculator.separator.CustomSeparatorMarker;
+import calculator.separator.SeparatorProcessor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -15,16 +18,9 @@ public class Calculator {
 
 
     public int processLogic(String expression) throws IllegalArgumentException {
-        // 1. 커스텀 구분자가 있는 경우 커스텀 구분자를 구한다.
-        String customSeparator = extractCustomSeparator(expression);
 
-        // 2. 커스텀 구분자 부분을 없애야한다.
-        if (customSeparator != null) {
-            expression = expression.replace(CustomSeparatorMarker.startSep + customSeparator + CustomSeparatorMarker.endSep, "");
-        }
-
-        // 3. 숫자만을 전부 구한다.
-        List<Integer> operands = extractOperand(expression, customSeparator);
+        SeparatorProcessor separatorProcessor = new SeparatorProcessor();
+        List<Integer> operands = separatorProcessor.processingSeparator(expression);
 
         // 4. 음수가 있는지 확인한다. 있다면 예외를 던진다.
         isContainNegativeInteger(operands);
@@ -39,34 +35,6 @@ public class Calculator {
                 throw new IllegalArgumentException();
             }
         }
-    }
-
-    private String separatePostProcessing(String preProcessedExpression){
-        return preProcessedExpression.substring(CustomSeparatorMarker.startSep.length(), preProcessedExpression.length() - CustomSeparatorMarker.endSep.length());
-    }
-
-    public String extractCustomSeparator(String expression){
-        String separation = null;
-        Pattern separatorPattern = Pattern.compile(Pattern.quote(CustomSeparatorMarker.startSep)  + "." + Pattern.quote(CustomSeparatorMarker.endSep));
-
-        Matcher matcher = separatorPattern.matcher(expression);
-        if (matcher.find()) {
-            separation = separatePostProcessing(matcher.group());
-        }
-        return separation;
-    }
-
-    public List<Integer> extractOperand(String expression, String customSeparator){
-        List<Integer> operands = new ArrayList<>();
-        expression = expression.replace(":", " ").replace(",", " ");
-        if (customSeparator != null){
-            expression = expression.replace(customSeparator, " ");
-        }
-
-        for (String s : expression.split(" ")) {
-            operands.add(Integer.parseInt(s));
-        }
-        return operands;
     }
 
     public int calculateAdd(List<Integer> operands){

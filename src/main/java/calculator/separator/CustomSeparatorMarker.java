@@ -1,4 +1,4 @@
-package calculator;
+package calculator.separator;
 
 public class CustomSeparatorMarker {
     static final public String startSep = "//";
