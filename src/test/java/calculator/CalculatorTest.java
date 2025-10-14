@@ -1,6 +1,5 @@
 package calculator;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ public class CalculatorTest {
     @DisplayName("커스텀 구분자를 추출할 수 있어야한다.")
     void findSeparationTest() {
         Calculator calculator = new Calculator();
-        String expression = "//;\n1;2;3";
+        String expression = "//;\\n1;2;3";
         String result = calculator.extractCustomSeparator(expression);
 
         assertThat(result).isEqualTo(";");
