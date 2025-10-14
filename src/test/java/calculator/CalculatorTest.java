@@ -11,12 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class CalculatorTest {
-
-
-
-
-
-
     @Test
     @DisplayName("음수가 나와서는 안된다. 모든 숫자는 양수여야 한다.")
     void NoMinusTest(){
