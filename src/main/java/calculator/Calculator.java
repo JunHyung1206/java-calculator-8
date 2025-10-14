@@ -1,5 +1,7 @@
 package calculator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,17 +14,15 @@ public class Calculator {
     }
 
 
-
-    public int calculateAdd(String expression) {
+    public int processLogic(String expression) {
         // 1. 커스텀 구분자가 있는 경우 커스텀 구분자를 구한다.
         String customSeparator = extractCustomSeparator(expression);
 
         // 2. 숫자만을 전부 구한다.
-
+        List<Integer> operands = extractOperand(expression, customSeparator);
 
         // 3. 숫자를 전부 더한다.
-
-        return -1;
+        return calculateAdd(operands);
     }
 
     private String separatePostProcessing(String preProcessedExpression){
@@ -40,7 +40,23 @@ public class Calculator {
         if(matcher.find()){
             separation = separatePostProcessing(matcher.group());
         }
-
         return separation;
+    }
+
+    public List<Integer> extractOperand(String expression, String customSeparator){
+        List<Integer> operands = new ArrayList<>();
+        expression = expression.replace(":", " ").replace(",", " ").replace(customSeparator, " ");
+        for (String s : expression.split(" ")) {
+            operands.add(Integer.parseInt(s));
+        }
+        return operands;
+    }
+
+    public int calculateAdd(List<Integer> operands){
+        int result = 0;
+        for (Integer operand : operands) {
+            result += operand;
+        }
+        return result;
     }
 }

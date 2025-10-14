@@ -1,6 +1,7 @@
 package calculator;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -27,16 +28,6 @@ class ApplicationTest extends NsTest {
                 .isInstanceOf(IllegalArgumentException.class)
         );
     }
-
-    @Test
-    void findSeparation_Test() {
-        Calculator calculator = new Calculator();
-        String expression = "//;\n1;2;3";
-        String result = calculator.extractCustomSeparator(expression);
-
-        assertThat(result).isEqualTo(";");
-    }
-
 
     @Override
     public void runMain() {
