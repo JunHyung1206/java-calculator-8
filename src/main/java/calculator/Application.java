@@ -23,8 +23,7 @@ public class Application {
         Calculator calculator = new Calculator();
 
         int result = calculator.processLogic(s);
-        System.out.println("s = " + s);
-        System.out.println("result = " + result);
+        System.out.println("결과 : " + result);
 
         Console.close();
 

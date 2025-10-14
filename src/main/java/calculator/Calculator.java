@@ -14,7 +14,7 @@ public class Calculator {
     }
 
 
-    public int processLogic(String expression) {
+    public int processLogic(String expression) throws IllegalArgumentException {
         // 1. 커스텀 구분자가 있는 경우 커스텀 구분자를 구한다.
         String customSeparator = extractCustomSeparator(expression);
 
@@ -22,25 +22,30 @@ public class Calculator {
         List<Integer> operands = extractOperand(expression, customSeparator);
 
         // 3. 음수가 있는지 확인한다. 있다면 예외를 던진다.
-        operands.stream().filter(i-> i< 0).findFirst().orElseThrow(IllegalArgumentException::new);
+        isContainNegativeInteger(operands);
 
         // 4. 숫자를 전부 더한다.
         return calculateAdd(operands);
     }
 
+    public void isContainNegativeInteger(List<Integer> operands) throws IllegalArgumentException {
+        for (Integer operand : operands) {
+            if (operand < 0) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
     private String separatePostProcessing(String preProcessedExpression){
-        String startSep = "//";
-        String endSep = "\n";
-        return preProcessedExpression.substring(startSep.length(), preProcessedExpression.length() - endSep.length());
+        return preProcessedExpression.substring(CustomSeparatorMarker.startSep.length(), preProcessedExpression.length() - CustomSeparatorMarker.endSep.length());
     }
 
     public String extractCustomSeparator(String expression){
         String separation = null;
-        Pattern separationPattern = Pattern.compile("//.\n");
+        Pattern separatorPattern = Pattern.compile(Pattern.quote(CustomSeparatorMarker.startSep)  + "." + Pattern.quote(CustomSeparatorMarker.endSep));
 
-        Matcher matcher = separationPattern.matcher(expression);
-
-        if(matcher.find()){
+        Matcher matcher = separatorPattern.matcher(expression);
+        if (matcher.find()) {
             separation = separatePostProcessing(matcher.group());
         }
         return separation;
