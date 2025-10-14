@@ -32,4 +32,20 @@ public class CalculatorTest {
         assertThat(operands2).isEqualTo(expect2);
 
     }
+
+
+    @Test
+    @DisplayName("커스텀 구분자가 없는 경우 기본 구분자만 사용해야한다.")
+    void NoCustomSeparationTest(){
+        Calculator calculator = new Calculator();
+        List<Integer> operands = calculator.extractOperand("1,2;3", null);
+
+        List<Integer> expect = List.of(1, 2, 3);
+        assertThat(operands).isEqualTo(expect);
+
+        List<Integer> operands2 = calculator.extractOperand("1,2;3:4,5", null);
+        List<Integer> expect2 = List.of(1, 2, 3, 4, 5);
+        assertThat(operands2).isEqualTo(expect2);
+
+    }
 }
