@@ -21,7 +21,10 @@ public class Calculator {
         // 2. 숫자만을 전부 구한다.
         List<Integer> operands = extractOperand(expression, customSeparator);
 
-        // 3. 숫자를 전부 더한다.
+        // 3. 음수가 있는지 확인한다. 있다면 예외를 던진다.
+        operands.stream().filter(i-> i< 0).findFirst().orElseThrow(IllegalArgumentException::new);
+
+        // 4. 숫자를 전부 더한다.
         return calculateAdd(operands);
     }
 
