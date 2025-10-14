@@ -45,7 +45,11 @@ public class Calculator {
 
     public List<Integer> extractOperand(String expression, String customSeparator){
         List<Integer> operands = new ArrayList<>();
-        expression = expression.replace(":", " ").replace(",", " ").replace(customSeparator, " ");
+        expression = expression.replace(":", " ").replace(",", " ");
+        if (customSeparator != null){
+            expression = expression.replace(customSeparator, " ");
+        }
+
         for (String s : expression.split(" ")) {
             operands.add(Integer.parseInt(s));
         }
