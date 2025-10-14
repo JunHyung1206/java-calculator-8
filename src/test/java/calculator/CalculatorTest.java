@@ -1,11 +1,13 @@
 package calculator;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorTest {
     @Test()
@@ -38,14 +40,20 @@ public class CalculatorTest {
     @DisplayName("커스텀 구분자가 없는 경우 기본 구분자만 사용해야한다.")
     void NoCustomSeparationTest(){
         Calculator calculator = new Calculator();
-        List<Integer> operands = calculator.extractOperand("1,2;3", null);
+        List<Integer> operands = calculator.extractOperand("1,2:3", null);
 
         List<Integer> expect = List.of(1, 2, 3);
         assertThat(operands).isEqualTo(expect);
 
-        List<Integer> operands2 = calculator.extractOperand("1,2;3:4,5", null);
-        List<Integer> expect2 = List.of(1, 2, 3, 4, 5);
-        assertThat(operands2).isEqualTo(expect2);
+        assertThrows(NumberFormatException.class, () -> calculator.extractOperand("1,2;3:4,5", null));
+
+    }
+
+    @Test
+    @DisplayName("음수가 나와서는 안된다. 모든 숫자는 양수여야 한다.")
+    void NoMinusTest(){
+        Calculator calculator = new Calculator();
+        assertThrows(IllegalArgumentException.class, () -> calculator.extractOperand("1,2;-3", null));
 
     }
 }
