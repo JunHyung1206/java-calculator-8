@@ -3,13 +3,9 @@ package calculator.separator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class Separator {
-    protected List<String> separators;
-    public List<String> getSeparators() {
-        return separators;
-    }
-
-    List<String> getConcatSeparators(Separator separator) {
-        return Stream.concat(this.getSeparators().stream(), separator.getSeparators().stream()).toList();
-    }
+public interface Separator {
+    public final static List<String> basicSeparators = List.of(":",",");
+    public final static  String startSep = "//";
+    public final static  String endSep = "\\n";
+    public List<Integer> split(String expression);
 }
