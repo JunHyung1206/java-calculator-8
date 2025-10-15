@@ -1,6 +1,5 @@
 package calculator.separator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeparatorProcessor {
