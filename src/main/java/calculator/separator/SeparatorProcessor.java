@@ -16,16 +16,15 @@ public class SeparatorProcessor {
 
     public List<Integer> processingSeparator(String expression) {
         // 1. 커스텀 연산자가 있는 부분을 추출합니다.
+        // 2. 커스텀 연산자가 있다면 해당 수식에서 커스텀 연산자가 있는 부분을 제거합니다.
+        // 3. 마커를 제거한 후 해당 커스텀 연산자를 연산자 목록에 추가합니다.
+        // 4. 합할 피연산자만 추출하여 반환합니다.
+
         String customSeparatorSection = extractCustomSeparatorSection(expression);
-
         if (customSeparatorSection != null) {
-            // 2. 커스텀 연산자가 있다면 해당 수식에서 커스텀 연산자가 있는 부분을 제거합니다.
             expression = removeCustomSeparatorSection(expression, customSeparatorSection);
-
-            // 3. 마커를 제거한 후 해당 커스텀 연산자를 연산자 목록에 추가합니다.
             separators.add(removeMarker(customSeparatorSection));
         }
-        // 4. 합할 피연산자만 추출하여 반환합니다.
         return extractOperand(expression, separators);
     }
 
