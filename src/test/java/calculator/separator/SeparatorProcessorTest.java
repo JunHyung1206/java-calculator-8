@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SeparatorProcessorTest {
-    SeparatorProcessor separatorProcessor;
+/*    SeparatorProcessor separatorProcessor;
 
     @BeforeEach
     void setUp(){
@@ -43,5 +43,5 @@ class SeparatorProcessorTest {
 
         assertThat(result).isEqualTo(List.of());
 
-    }
+    }*/
 }

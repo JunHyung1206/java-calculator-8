@@ -67,4 +67,42 @@ public class CalculatorTest {
         assertThat(result).isEqualTo(0);
     }
 
+
+
+    @Test
+    @DisplayName("실패 케이스 : 커스텀 구분자 이외의 구분자가 입력된 경우")
+    void notSeparator(){
+        String expression = "//;\\n11#";
+        calculator.processCalculate(expression);
+    }
+
+    @Test
+    @DisplayName("실패 케이스 : 커스텀 구분자 표시가 잘못된 경우")
+    void missingCustomSeparator(){
+        String expression = "/;\\n11#";
+        calculator.processCalculate(expression);
+    }
+
+
+    @Test
+    @DisplayName("실패 케이스 : 공백이 있는 경우도 잘못된 값으로 간주합니다.")
+    void existBlank(){
+        String expression = "/;\\n11 2";
+        calculator.processCalculate(expression);
+
+        expression = " ";
+        calculator.processCalculate(expression);
+    }
+
+
+    @Test
+    @DisplayName("실패 케이스 : 커스텀 구분자에는 숫자를 허용하지 않는다. 추가적으로 -도 허용하지 않는다")
+    void separatorRuleFault(){
+        String expression = "/-\\n11";
+        calculator.processCalculate(expression);
+
+        expression = "/0\\n11";
+        calculator.processCalculate(expression);
+
+    }
 }
