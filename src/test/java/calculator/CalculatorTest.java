@@ -53,7 +53,7 @@ public class CalculatorTest {
     }
 
     @Test
-    @DisplayName("입력이 없는 경우")
+    @DisplayName("성공 케이스 : 입력이 없는 경우 0이 반환된다.")
     void notInput(){
         String expression;
         int result;
