@@ -1,19 +1,18 @@
 package calculator.separator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 public class SeparatorProcessor {
-    List<String> separators = new ArrayList<>();
+    private List<String> separators;
+    private final BasicSeparator basicSeparator;
 
-    // TODO: 기본 구분자, 커스텀 구분자 어떻게 처리하면 좋을지에 대해 고민한다.
     public SeparatorProcessor() {
-        separators.add(",");
-        separators.add(":");
+        separators = new ArrayList<>();
+        basicSeparator = new BasicSeparator();
+        separators.addAll(basicSeparator.getSeparators());
     }
 
     public List<Integer> processingSeparator(String expression) {
@@ -25,7 +24,8 @@ public class SeparatorProcessor {
         String customSeparatorSection = extractCustomSeparatorSection(expression);
         if (customSeparatorSection != null) {
             expression = removeCustomSeparatorSection(expression, customSeparatorSection);
-            separators.add(removeMarker(customSeparatorSection));
+            CustomSeparator customSeparator = new CustomSeparator(removeMarker(customSeparatorSection));
+            separators = basicSeparator.getConcatSeparators(customSeparator);
         }
         return extractOperand(expression, separators);
     }
@@ -43,8 +43,8 @@ public class SeparatorProcessor {
         return null;
     }
 
-    private String removeMarker(String customSeparatorSection){
-        return customSeparatorSection.replace(CustomSeparatorMarker.startSep, "").replace(CustomSeparatorMarker.endSep, "");
+    private List<String> removeMarker(String customSeparatorSection){
+        return List.of(customSeparatorSection.replace(CustomSeparatorMarker.startSep, "").replace(CustomSeparatorMarker.endSep, ""));
     }
 
     public List<Integer> extractOperand(String expression, List<String> separators){
