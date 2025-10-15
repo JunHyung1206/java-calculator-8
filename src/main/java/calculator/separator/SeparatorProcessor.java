@@ -1,9 +1,11 @@
 package calculator.separator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class SeparatorProcessor {
     List<String> separators = new ArrayList<>();
@@ -50,6 +52,12 @@ public class SeparatorProcessor {
         for (String separator : separators) {
             expression = expression.replace(separator, " ");
         }
+        expression = expression.strip();
+
+        if(expression.isBlank()) {
+            return operands;
+        }
+
         for (String operand : expression.split(" ")) {
             operands.add(Integer.parseInt(operand));
         }
