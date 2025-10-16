@@ -61,10 +61,15 @@ class ValidatorTest {
     @Test
     @DisplayName("실패 케이스 : 구분자에 - 경우")
     void existMinus(){
-        assertThat(Validator.validate("//-\\n11 2")).isFalse();
+        assertThat(Validator.validate("//-\\n11,2")).isFalse();
         assertThat(Validator.validate("//-\\n11-2")).isFalse();
     }
 
+    @Test
+    @DisplayName("실패 케이스 : 커스텀 구분자가 두개 있는 경우")
+    void validationNumberWithDoubleCustom(){
+        assertThat(Validator.validate("//,\\n//^\\n1,2")).isFalse();
+    }
 
     @Test
     @DisplayName("실패 케이스 : 구분자에 숫자와 문자를 넣은 경우")
