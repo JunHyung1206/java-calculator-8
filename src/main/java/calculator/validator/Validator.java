@@ -1,6 +1,6 @@
 package calculator.validator;
 
-import calculator.separator.CustomSeparator;
+import calculator.separator.v1.CustomSeparator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
