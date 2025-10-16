@@ -12,10 +12,6 @@ public class CustomSeparator implements Separator {
         this.separators = new ArrayList<>();
     }
 
-    public void setSeparators(List<String> separators) {
-        this.separators = separators;
-    }
-
     public static boolean isExistCustomSeparator(String expression) {
         Pattern separatorPattern = Pattern.compile(Pattern.quote(startSep)  + "." + Pattern.quote(endSep));
         return separatorPattern.matcher(expression).find();
