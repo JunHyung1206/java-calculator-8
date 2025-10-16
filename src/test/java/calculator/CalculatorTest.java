@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorTest {
 
-    Calculator calculator;
+    StringSumCalculator calculator;
     @BeforeEach
     void setUp() {
-        calculator = new Calculator();
+        calculator = new StringSumCalculator();
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CalculatorTest {
     }
 
 
-
+    // TODO: 이 부분은 다른 밸리데이션 하는 부분을 마련
     @Test
     @DisplayName("실패 케이스 : 커스텀 구분자 이외의 구분자가 입력된 경우")
     void notSeparator(){
