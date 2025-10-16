@@ -2,7 +2,6 @@ package calculator.separator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class BasicSeparator implements Separator {
     public List<Integer> extractOperand(String expression){
