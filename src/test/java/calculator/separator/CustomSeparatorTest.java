@@ -15,16 +15,12 @@ class CustomSeparatorTest {
         separator = new CustomSeparator();
     }
 
+
     @Test()
     @DisplayName("커스텀 구분자 부분을 추출한다")
     void extractCustomSeparatorSectionTest() {
-        String expression = "//;\\n1;2;3";
-        String result = separator.extractCustomSeparatorSection(expression);
-
-        assertThat(result).isEqualTo("//;\\n");
+        assertThat(separator.extractCustomSeparatorSection("//;\\n1;2;3")).isEqualTo("//;\\n");
     }
-
-
 
     @Test
     @DisplayName("커스텀 구분자 부분 추출 잘 되는지 테스트")
@@ -39,12 +35,8 @@ class CustomSeparatorTest {
 
     @Test
     void splitTest(){
-        String expression = "//;\\n";
-
-        assertThat(separator.split(expression)).isEqualTo(List.of());
-
-        expression  = "//;\\n1";
-        assertThat(separator.split(expression)).isEqualTo(List.of(1));
+        assertThat(separator.split("//;\\n")).isEqualTo(List.of());
+        assertThat(separator.split("//;\\n1")).isEqualTo(List.of(1));
 
     }
 
