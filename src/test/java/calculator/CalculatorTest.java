@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class CalculatorTest {
-
     StringSumCalculator calculator;
     @BeforeEach
     void setUp() {
@@ -27,7 +26,6 @@ public class CalculatorTest {
     @Test
     @DisplayName("성공 케이스 : 기본 구분자만 있는 경우")
     void successCaseNoCustomSeparation(){
-
         assertThat(calculator.calculate("2:2")).isEqualTo(4);
         assertThat(calculator.calculate("1,2:3:4")).isEqualTo(10);
         assertThat(calculator.calculate("1")).isEqualTo(1);
