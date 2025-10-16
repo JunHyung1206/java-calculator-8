@@ -10,7 +10,6 @@ import java.util.List;
 public class StringSumCalculator {
 
     public int calculate(String expression) {
-
         // 1. 구분자에 대한 내용은 SeparatorProcessor에서 처리한다.
         // 2. 각 피연산자에 대해서 음수가 있다면 예외를 던진다.
         // 3. 각 피연산자에 대한 합을 반환한다.
@@ -26,13 +25,9 @@ public class StringSumCalculator {
         // 2. 결과값을 계산한다.
         // 3. 당연히 출력도 계산기 내에서 처리된다.
 
-        Reader input = new Reader();
-        String expression = input.read();
-
+        String expression = Reader.read();
         int result = calculate(expression);
-
-        Printer output = new Printer();
-        output.print(result);
+        Printer.print(result);
         return result;
     }
 }

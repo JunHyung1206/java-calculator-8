@@ -3,7 +3,18 @@ package calculator.view;
 import camp.nextstep.edu.missionutils.Console;
 
 public class Reader {
-    public String read(){
+    private static Reader instance;
+    private Reader(){
+    }
+
+    public static Reader getInstance() {
+        if(instance == null){
+            instance = new Reader();
+        }
+        return instance;
+    }
+
+    public static String read(){
         String expression = Console.readLine();
         Console.close();
 
