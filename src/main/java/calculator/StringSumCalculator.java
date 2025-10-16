@@ -14,7 +14,7 @@ public class StringSumCalculator {
         // 2. 각 피연산자에 대해서 음수가 있다면 예외를 던진다.
         // 3. 각 피연산자에 대한 합을 반환한다.
         List<Integer> operands = new SeparatorProcessor().extractOperand(expression);
-        if (operands.stream().anyMatch(i -> i < 0)) {
+        if (operands.stream().anyMatch(i -> i <= 0)) {
             throw new IllegalArgumentException();
         }
         return operands.stream().mapToInt(Integer::intValue).sum();
