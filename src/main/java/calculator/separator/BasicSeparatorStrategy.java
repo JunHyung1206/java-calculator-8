@@ -3,9 +3,10 @@ package calculator.separator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static calculator.separator.SeparatorConfig.DEFAULT_SEPARATORS;
+
 public class BasicSeparatorStrategy implements SeparatorStrategy {
 
-    private static final String[] DEFAULT_SEPARATOR = {",", ":"};
 
     @Override
     public boolean supports(String expression) {
@@ -15,7 +16,7 @@ public class BasicSeparatorStrategy implements SeparatorStrategy {
 
     @Override
     public List<Integer> extractOperands(String expression) {
-        Pattern sepPattern = Pattern.compile("[" + String.join("", DEFAULT_SEPARATOR) + "]");
+        Pattern sepPattern = Pattern.compile("[" + String.join("", DEFAULT_SEPARATORS) + "]");
         return Tokenizer.tokenize(sepPattern, expression);
     }
 }
