@@ -19,10 +19,8 @@ public class CustomSeparator implements Separator {
 
     public String extractCustomSeparatorSection(String expression){
         Pattern separatorPattern = Pattern.compile(Pattern.quote(startSep)  + "." + Pattern.quote(endSep));
-        System.out.println("expression = " + expression);
         Matcher matcher = separatorPattern.matcher(expression);
         if(matcher.find()){
-            System.out.println(matcher.group());
             return matcher.group();
         }
         return null;
