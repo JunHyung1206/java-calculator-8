@@ -13,17 +13,21 @@ public class CustomSeparator implements Separator {
     }
 
     public static boolean isExistCustomSeparator(String expression) {
-        Pattern separatorPattern = Pattern.compile(Pattern.quote(startSep)  + "." + Pattern.quote(endSep));
+        Pattern separatorPattern = Pattern.compile(getCustomRegex());
         return separatorPattern.matcher(expression).find();
     }
 
     public String extractCustomSeparatorSection(String expression){
-        Pattern separatorPattern = Pattern.compile(Pattern.quote(startSep)  + "." + Pattern.quote(endSep));
+        Pattern separatorPattern = Pattern.compile(getCustomRegex());
         Matcher matcher = separatorPattern.matcher(expression);
         if(matcher.find()){
             return matcher.group();
         }
         return null;
+    }
+
+    public static String getCustomRegex() {
+        return Pattern.quote(startSep) + "[^\\s\\w-]" + Pattern.quote(endSep);
     }
 
     public void addSeparations(String customSeparatorSection){
