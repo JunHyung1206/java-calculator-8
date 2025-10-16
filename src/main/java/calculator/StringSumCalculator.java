@@ -14,7 +14,14 @@ public class StringSumCalculator {
     public int calculate(String expression) {
         List<Integer> numbers = processor.extractNumbers(expression);
         Validator.validate(numbers);
-        return numbers.stream().mapToInt(Integer::intValue).sum();
+        int sum = 0;
+        try{
+            sum = numbers.stream()
+                .reduce(0, Math::addExact);
+        } catch (ArithmeticException e){
+            throw new IllegalArgumentException("계산 과정 중 오버플로우가 발생하였습니다.");
+        }
+        return sum;
     }
 
 

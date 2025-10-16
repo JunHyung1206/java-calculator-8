@@ -20,7 +20,11 @@ public class Tokenizer {
             if (!tok.chars().allMatch(Character::isDigit)) {
                 throw new IllegalArgumentException("숫자만 허용됩니다: '" + tok + "'");
             }
-            nums.add(Integer.parseInt(tok));
+            try {
+                nums.add(Integer.parseInt(tok));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("입력된 숫자가 너무 큽니다.");
+            }
         }
         return nums;
     }
