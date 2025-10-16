@@ -1,21 +1,12 @@
 package calculator.validator;
 
-import calculator.separator.v1.CustomSeparator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
 public class Validator {
-    public static boolean validate(String input){
-        String matchResult;
-        Pattern validPattern = Pattern.compile("(" + CustomSeparator.getCustomRegex() + ")" + "?" + "(\\d+([^\\s\\w]\\d+)*|)");
-        Matcher matcher = validPattern.matcher(input);
-
-        if(matcher.find()){
-            matchResult = matcher.group();
-            return matchResult.equals(input);
+    public static void validate(List<Integer> numbers){
+        List<Integer> nonPositive = numbers.stream().filter(n -> n <= 0).toList();
+        if (!nonPositive.isEmpty()) {
+            throw new IllegalArgumentException("양수만 허용합니다: " + nonPositive);
         }
-
-        return false;
     }
 }

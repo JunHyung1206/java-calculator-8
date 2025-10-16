@@ -16,15 +16,11 @@ public class Tokenizer {
             if (tok.isEmpty()) {
                 throw new IllegalArgumentException("빈 피연산자가 포함되어 있습니다.");
             }
-            // 숫자만 허용(필요 시 규칙 확장 가능)
+            // 피연산자가 숫자가 아닌 경우
             if (!tok.chars().allMatch(Character::isDigit)) {
                 throw new IllegalArgumentException("숫자만 허용됩니다: '" + tok + "'");
             }
-            int v = Integer.parseInt(tok);
-            if (v <= 0) {
-                throw new IllegalArgumentException("양수만 허용합니다: " + v);
-            }
-            nums.add(v);
+            nums.add(Integer.parseInt(tok));
         }
         return nums;
     }
