@@ -40,20 +40,20 @@ public class CustomSeparator implements Separator {
         String splitPattern = "[" + String.join("", basicSeparators) + String.join("", separators) + "]";
 
         for (String s : expression.split(splitPattern)) {
+            if(!isNumeric(s)){
+                throw new IllegalArgumentException("지정된 구분자 이외의 구분자가 사용되었습니다.");
+            }
             operands.add(Integer.parseInt(s));
         }
-
         return operands;
     }
 
+    private boolean isNumeric(String s) {
+        return s.matches("\\d+");
+    }
 
     @Override
     public List<Integer> split(String expression) {
-        // 1. 커스텀 연산자가 있는 부분을 추출합니다. 만약 커스텀 연산자만 있다면 빈 리스트를 반환합니다.
-        // 2. 해당 수식에서 커스텀 연산자가 있는 부분을 제거합니다.
-        // 3. 마커를 제거한 후 해당 커스텀 연산자를 연산자 목록에 추가합니다.
-        // 4. 연산자 목록에 따라 수식을 분리합니다.
-
         String customSeparatorSection = extractCustomSeparatorSection(expression);
         if (customSeparatorSection.equals(expression)){
             return new ArrayList<>();
