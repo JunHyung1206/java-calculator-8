@@ -23,7 +23,10 @@ public class CustomSeparatorStrategy implements SeparatorStrategy{
             throw new IllegalArgumentException("Invalid expression: " + expression);
         }
 
-        String sep = Pattern.quote(matcher.group(1));
+        String sep = matcher.group(1);
+        if (sep.matches("[\\w-]")){
+            throw new IllegalArgumentException("구분자는 영어와 숫자, _, -를 제외합니다: " + expression);
+        }
         String body = expression.substring(matcher.end());
         Pattern sepPattern = Pattern.compile("[" + String.join("", DEFAULT_SEPARATORS) + sep + "]");
 
