@@ -117,4 +117,51 @@ public class CalculatorTest {
         StringSumCalculator c = new StringSumCalculator();
         assertThrows(IllegalArgumentException.class, () -> c.processCalculate());
     }
+
+    @Test
+    @DisplayName("실패 케이스 : 입력 과정 중 오버플로우 발생")
+    void inputOverflow() {
+        // 1) 입력 준비: 사용자가 콘솔에 타이핑한다고 가정
+        // 예: 커스텀 구분자를 쓰는 한 줄 입력
+        String fakeUserInput = "210000000000000000000"; // 마지막 \n은 엔터
+        System.setIn(new ByteArrayInputStream(fakeUserInput.getBytes()));
+        Console.close();
+
+        // 2) Console 싱글턴 리셋
+        //    (setIn 한 뒤에 close 해두면 다음 readLine 때 새 System.in을 사용)
+        Console.close();
+
+        // 3) 출력 캡처
+        ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outBuf));
+
+        // 4) 검증
+        StringSumCalculator c = new StringSumCalculator();
+        assertThrows(IllegalArgumentException.class, c::processCalculate);
+    }
+
+    @Test
+    @DisplayName("실패 케이스 : 계산 과정 중 오버플로우 발생")
+    void sumOverflow() {
+        // 1) 입력 준비: 사용자가 콘솔에 타이핑한다고 가정
+        // 예: 커스텀 구분자를 쓰는 한 줄 입력
+        String fakeUserInput = "2100000000,2100000000"; // 마지막 \n은 엔터
+        System.setIn(new ByteArrayInputStream(fakeUserInput.getBytes()));
+        Console.close();
+
+        // 2) Console 싱글턴 리셋
+        //    (setIn 한 뒤에 close 해두면 다음 readLine 때 새 System.in을 사용)
+        Console.close();
+
+        // 3) 출력 캡처
+        ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outBuf));
+
+        // 4) 검증
+        StringSumCalculator c = new StringSumCalculator();
+        assertThrows(IllegalArgumentException.class, c::processCalculate);
+
+    }
+
+
 }
