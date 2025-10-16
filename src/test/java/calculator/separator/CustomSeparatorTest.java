@@ -1,5 +1,6 @@
 package calculator.separator;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,17 @@ class CustomSeparatorTest {
     }
 
     @Test
+    @DisplayName("분할이 잘되는지 확인한다.")
     void splitTest(){
         assertThat(separator.split("//;\\n")).isEqualTo(List.of());
         assertThat(separator.split("//;\\n1")).isEqualTo(List.of(1));
-
+        assertThat(separator.split("//;\\n1,2,3")).isEqualTo(List.of(1,2,3));
+        assertThat(separator.split("//;\\n1,2,3,5")).isEqualTo(List.of(1,2,3,5));
     }
 
+    @Test
+    @DisplayName("커스텀 구분자 이외의 구분자가 오는 경우 예외가 발생한다.")
+    void splitExceptionTest(){
+        Assertions.assertThrows(IllegalArgumentException.class, () -> separator.split("//;\\n3=5=3"));
+    }
 }

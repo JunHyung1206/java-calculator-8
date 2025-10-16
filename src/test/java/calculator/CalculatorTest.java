@@ -47,6 +47,16 @@ public class CalculatorTest {
         assertThat(calculator.calculate("")).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("실패 케이스 : 양수로 구성된 경우가 아닌 경우")
+    void notPositiveNumber(){
+        assertThrows(IllegalArgumentException.class, () -> calculator.calculate("//;\\n2;2,0"));
+        assertThrows(IllegalArgumentException.class, () -> calculator.calculate("//,\\n1,2:3:4,5,6,-1"));
+        assertThrows(IllegalArgumentException.class, () -> calculator.calculate("0"));
+        assertThrows(IllegalArgumentException.class, () -> calculator.calculate("-2"));
+
+    }
+
 
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
@@ -89,7 +99,7 @@ public class CalculatorTest {
     }
 
     @Test
-    @DisplayName("실패 케이스, Validator가 잘 동작하는지 검증")
+    @DisplayName("실패 케이스 : Validator가 잘 동작하는지 검증")
     void processCalculateFailTest() {
         // 1) 입력 준비: 사용자가 콘솔에 타이핑한다고 가정
         // 예: 커스텀 구분자를 쓰는 한 줄 입력
@@ -109,5 +119,4 @@ public class CalculatorTest {
         StringSumCalculator c = new StringSumCalculator();
         assertThrows(IllegalArgumentException.class, () -> c.processCalculate());
     }
-
 }
