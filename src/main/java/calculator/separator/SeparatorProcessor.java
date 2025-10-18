@@ -6,17 +6,8 @@ public class SeparatorProcessor {
     private final SeparatorSelector selector;
 
     public SeparatorProcessor() {
-        // 기본 제공 전략(순서 중요: 커스텀 → 기본)
-        this.selector = new SeparatorSelector(
-                List.of(new CustomSeparatorStrategy(), new BasicSeparatorStrategy())
-        );
+        this.selector = new SeparatorSelector();
     }
-
-    // 테스트나 확장을 위해 주입 가능하게 하는 보조 생성자
-    public SeparatorProcessor(SeparatorSelector selector) {
-        this.selector = selector;
-    }
-
 
     public List<Integer> extractNumbers(String expression) {
         if (expression == null) {

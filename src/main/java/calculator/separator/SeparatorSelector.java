@@ -3,12 +3,8 @@ package calculator.separator;
 import java.util.List;
 
 public final class SeparatorSelector {
-    private final List<SeparatorStrategy> strategies;
-
-    public SeparatorSelector(List<SeparatorStrategy> strategies) {
-        this.strategies = strategies;
-    }
-
+    // 기본 제공 전략(순서 중요: 커스텀 → 기본)
+    private final List<SeparatorStrategy> strategies = List.of(new CustomSeparatorStrategy(), new BasicSeparatorStrategy());
     public List<Integer> extract(String expression) {
         for (SeparatorStrategy s : strategies) {
             if (s.supports(expression)) {

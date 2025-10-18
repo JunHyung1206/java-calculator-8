@@ -24,12 +24,15 @@ public class CustomSeparatorStrategy implements SeparatorStrategy{
         }
 
         String sep = matcher.group(1);
-        if (sep.matches("[\\w-]")){
+        if (sep.matches("[\\s\\w-]")){
             throw new IllegalArgumentException("구분자는 영어와 숫자, _, -를 제외합니다: " + expression);
         }
-        String body = expression.substring(matcher.end());
-        Pattern sepPattern = Pattern.compile("[" + String.join("", DEFAULT_SEPARATORS) + sep + "]");
 
+        String body = expression.substring(matcher.end());
+        if (body.matches("^[0-9]]")) {
+            throw new IllegalArgumentException("구분자 오류입니다.: " + expression);
+        }
+        Pattern sepPattern = Pattern.compile("[" + String.join("", DEFAULT_SEPARATORS) + sep + "]");
 
         return Tokenizer.tokenize(sepPattern, body);
     }
