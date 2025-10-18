@@ -40,6 +40,18 @@ class CustomSeparatorStrategyTest {
 
         assertThat(customSeparatorStrategy.supports("//;\\n1,24321;512343124")).isTrue(); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
         assertThat(customSeparatorStrategy.extractOperands("//;\\n1,24321;51234312")).isEqualTo(List.of(1, 24321, 51234312)); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
+
+
+        assertThat(customSeparatorStrategy.supports("//n\\n1n24321n512343124")).isTrue(); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
+        assertThat(customSeparatorStrategy.extractOperands("//n\\n1n24321n512343124")).isEqualTo(List.of(1, 24321, 512343124)); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
+    }
+
+    @Test
+    @DisplayName("성공 케이스 : 구분자로 공백을 사용한 경우")
+    void existBlank(){
+        assertThat(customSeparatorStrategy.supports("// \\n1 24321 512343124")).isTrue(); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
+        assertThat(customSeparatorStrategy.extractOperands("// \\n1 24321 512343124")).isEqualTo(List.of(1, 24321, 512343124)); // 기본구분자 목록에 없는 경우라도 우선은 입력형식만 봄.
+
     }
 
     @Test
@@ -49,24 +61,25 @@ class CustomSeparatorStrategyTest {
     }
 
     @Test
-    @DisplayName("실패 케이스 : 공백이 있는 경우")
-    void existBlank(){
-        assertThat(customSeparatorStrategy.supports("//;\\n11 2")).isTrue();
-        assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("// \\n11 2"));
-
-        assertThat(customSeparatorStrategy.supports("// \\n11,2")).isTrue();
-        assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("//;\\n11 2"));
-
-    }
-
-    @Test
-    @DisplayName("실패 케이스 : 구분자에 - 경우")
+    @DisplayName("수식에 -가 들어간 경우")
     void existMinus(){
         assertThat(customSeparatorStrategy.supports("//-\\n11,2")).isTrue();
-        assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("//-\\n11,2"));
+        assertThat(customSeparatorStrategy.extractOperands("//-\\n11,2")).isEqualTo(List.of(11, 2));
+
 
         assertThat(customSeparatorStrategy.supports("//-\\n11-2")).isTrue();
-        assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("//-\\n11-2"));
+        assertThat(customSeparatorStrategy.extractOperands("//-\\n11-2")).isEqualTo(List.of(11, 2));
+
+        assertThat(customSeparatorStrategy.supports("//-\\n11,32,-2")).isTrue();
+        assertThat(customSeparatorStrategy.extractOperands("//-\\n11,32,-2")).isEqualTo(List.of(11, 32,-2));
+
+        assertThat(customSeparatorStrategy.supports("//-\\n11,32--2")).isTrue();
+        assertThat(customSeparatorStrategy.extractOperands("//-\\n11,32--2")).isEqualTo(List.of(11, 32,-2));
+
+
+        assertThat(customSeparatorStrategy.supports("//-\\n11,32--2-2")).isTrue();
+        assertThat(customSeparatorStrategy.extractOperands("//-\\n11,32--2-2")).isEqualTo(List.of(11, 32,-2,2));
+
 
     }
 
@@ -80,9 +93,6 @@ class CustomSeparatorStrategyTest {
     @Test
     @DisplayName("실패 케이스 : 구분자에 숫자와 문자를 넣은 경우")
     void separatorInAlphabetOrDigit(){
-        assertThat(customSeparatorStrategy.supports("//A\\n11A2")).isTrue();
-        assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("//A\\n11A2"));
-
         assertThat(customSeparatorStrategy.supports("//0\\n1102")).isTrue();
         assertThrows(IllegalArgumentException.class, () -> customSeparatorStrategy.extractOperands("//0\\n1102"));
     }

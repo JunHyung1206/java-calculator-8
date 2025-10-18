@@ -71,5 +71,16 @@ class DefaultSeparatorStrategyTest {
 
     }
 
+    @Test
+    @DisplayName("음수가 있는 수식")
+    void validationNegativeNumber(){
+        assertThat(separatorStrategy.supports("-1,-2")).isTrue();
+        assertThat(separatorStrategy.extractOperands("-1,-2")).isEqualTo(List.of(-1,-2));
+
+        assertThat(separatorStrategy.supports("1,-2")).isTrue();
+        assertThat(separatorStrategy.extractOperands("1,-2")).isEqualTo(List.of(1,-2));
+
+    }
+
 
 }
