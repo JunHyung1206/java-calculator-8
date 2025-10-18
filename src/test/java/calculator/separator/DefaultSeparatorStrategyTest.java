@@ -80,6 +80,10 @@ class DefaultSeparatorStrategyTest {
         assertThat(separatorStrategy.supports("1,-2")).isTrue();
         assertThat(separatorStrategy.extractOperands("1,-2")).isEqualTo(List.of(1,-2));
 
+
+        assertThat(separatorStrategy.supports("1--2")).isTrue();
+        assertThat(separatorStrategy.extractOperands("1--2")).isEqualTo(List.of(1,-2));
+
     }
 
 
